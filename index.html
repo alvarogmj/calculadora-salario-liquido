@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Calculadora de salario líquido</title>
+        <script src="javascript.js"></script>
+        <link rel="stylesheet" href="estilo.css">
+    </head>
+    <body>
+        <header>
+            <h1>Calculadora de salario líquido</h1>
+        </header>
+        <main>
+            <section id="entrada">
+                <h1>Entrada</h1>
+                <form>
+                    <div>
+                        <label for="valor_bpc">Valor de la <abbr title="Base de Prestaciones y Contribuciones">BPC</abbr></label>
+                        <input type="number" id="valor_bpc" />
+                    </div>
+                    <div>
+                        <label for="input_salario">Salario nominal en pesos:</label>
+                        <input id="input_salario" type="number" min="0">
+                    </div>
+                    <fieldset>
+                        <legend>BPS y FONASA</legend>
+                        <input id="input_tiene_afap" type="checkbox">
+                        <label for="input_tiene_afap">Tiene AFAP <sup>1</sup></label><br>
+                        <input id="input_articulo8" type="checkbox">
+                        <label for="input_articulo8">Aplicar artículo 8 Ley 17.613</label><br>
+                        <input id="input_conyugue_a_cargo" type="checkbox">
+                        <label for="input_conyugue_a_cargo">¿Tiene cónyuge a cargo?</label><br>
+                        <input id="input_hijos_a_cargo" type="checkbox">
+                        <label for="input_hijos_a_cargo">¿Tiene hijos a cargo?</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Dependientes (IRPF)</legend>
+                        <input id="input_dependientes" type="checkbox">
+                        <label for="input_dependientes">¿Tiene personas a cargo?</label>
+                        <table id="dependientes">
+                            <thead>
+                                <tr>
+                                    <td>#</td>
+                                    <td>% de atribución</td>
+                                    <td>Discapacidad</td>
+                                    <td><button id="agregar_dependiente">+</button></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Profesional</legend>
+                        <input id="input_profesional" type="checkbox">
+                        <label for="input_profesional">¿Es profesional?</label>
+                        <div id="profesional">
+                            <div>
+                                <label for="input_fsol">¿Aporta al Fondo de Solidaridad?</label>
+                                <select id="input_fsol">
+                                    <option value="0">No</option>
+                                    <option value="0.5">1/2 BPC</option>
+                                    <option value="1">1 BPC</option>
+                                    <option value="2">2 BPC</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="input_adicional_fsol">¿Adicional Fondo de Solidaridad?</label>
+                                <input id="input_adicional_fsol" type="checkbox">
+                            </div>
+                            <div>
+                                <label for="input_cjppu">Aporte mensual a CJPPU o Caja Notarial:</label>
+                                <input id="input_cjppu" type="number" min="0" value="0">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Otras deducciones</legend>
+                        <label for="input_otras_deducciones">Monto:</label>
+                        <input id="input_otras_deducciones" type="number" min="0" value="0">
+                    </fieldset>
+                </form>
+            </section>
+            <section id="resultados">
+                <h1>Salario Líquido: <span id="salario_calculado"></span></h1>
+                <table id="detalle_bps">
+                    <thead>
+                        <tr>
+                            <td colspan="4">BPS</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="3">Montepío <sup>2</sup></td>
+                            <td>BPS</td>
+                            <td class="center" id="montepio_porcentaje_bps"></td>
+                            <td id="montepio_total_bps"></td>
+                        </tr>
+                        <tr>
+                            <td>AFAP</td>
+                            <td id="montepio_porcentaje_afap"></td>
+                            <td id="montepio_total_afap"></td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td id="montepio_porcentaje"></td>
+                            <td id="montepio_total"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">FONASA</td>
+                            <td id="fonasa_porcentaje"></td>
+                            <td id="fonasa_total"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">FRL</td>
+                            <td id="frl_porcentaje"></td>
+                            <td id="frl_total"></td>
+                        </tr>
+                        <tr class="bold">
+                            <th colspan="2">Total BPS</th>
+                            <td id="bps_total_porcentaje"></td>
+                            <td id="bps_total"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="detalle_profesionales">
+                    <thead>
+                        <tr>
+                            <td colspan="2">Profesionales</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Fondo de Solidaridad</th>
+                            <td id="fsol_total"></td>
+                        </tr>
+                        <tr>
+                            <th>CJPPU / Caja Notarial</th>
+                            <td id="cjppu_total"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <td colspan="3">IRPF</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bold">
+                            <th colspan="2">Monto imponible <sup>3</sup></th>
+                            <td id="monto_imponible"></td>
+                        </tr>
+                        <tr>
+                            <th rowspan="3">Deducciones</th>
+                            <td>Suma</td>
+                            <td>
+                                <span id="total_deducciones"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tasa aplicable</td>
+                            <td>
+                                <span id="tasa_deducciones"></span>
+                            </td>
+                        </tr>
+                        <tr class="bold">
+                            <td>Total</td>
+                            <td>
+                                <span id="final_deducciones"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">Impuesto</th>
+                            <td>Tasa efectiva</td>
+                            <td>
+                                <span id="irpf_total_cd_tasa"></span>
+                            </td>
+                        </tr>
+                        <tr class="bold">
+                            <td>Monto final</td>
+                            <td>
+                                <span id="irpf_total_cd"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="detalle_irpf">
+                    <thead>
+                        <tr>
+                            <td colspan="4">Franjas IRPF</td>
+                        </tr>
+                        <tr>
+                            <th>Desde (BPC)</th>
+                            <th>Hasta (BPC)</th>
+                            <th>Tasa</th>
+                            <th>Impuesto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+        <footer>
+            Notas:<br>
+            1. La afiliación a AFAP es obligatoria para salarios mayores a <span id="ayuda_afap"></span><br>
+            2. El aporte jubilatorio tiene un tope de <span id="ayuda_montepio"></span><br>
+            3. Para salarios mayores a <span id="ayuda_monto_imponible"></span>, el monto imponible
+            es el salario nominal más 6%
+        </footer>
+    </body>
+</html>

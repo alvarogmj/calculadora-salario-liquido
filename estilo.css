@@ -1,0 +1,202 @@
+html {
+    background-color: white;
+}
+
+body {
+    background-color: rgb(235, 235, 235);
+    font-family: Calibri, sans-serif;
+    border: 1px solid gray;
+    padding: 0.5em 1em;
+}
+
+header p {
+    text-align: center;
+}
+
+header h1 {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+
+abbr {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    cursor: help;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 40% 55%;
+    grid-gap: 5%;
+    width: 84%;
+    margin: 2em auto;
+}
+
+footer {
+    font-style: italic;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+sup {
+    color: silver;
+    font-size: 0.5em;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.center {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+input[type="text"], input[type="number"] {
+    text-align: right;
+    max-width: 50%;
+}
+
+input[type="text"] {
+    padding: 0 3px;
+}
+
+select {
+    font-size: 1em;
+    font-family: Calibri, sans-serif;
+}
+
+section {
+    padding: 1em;
+    border-radius: 5px;
+    border: 1px solid black;
+    background: white;
+}
+
+section h1 {
+    text-align: center;
+    margin: 0 auto 0.5em;
+}
+
+section label {
+    display: inline-block;
+    width: 50%;
+}
+
+section#entrada {
+    grid-column: 1 / 2;
+    grid-row: 1;
+}
+
+section#entrada div {
+    margin: 0.5em auto;
+}
+
+section#entrada input[type="checkbox"] {
+    margin: 0;
+}
+
+fieldset {
+    border: 1px solid silver;
+    margin-bottom: 1em;
+}
+
+section#resultados {
+    grid-column: 2 / 2;
+    grid-row: 1;
+}
+
+section#resultados table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 80%;
+    margin: 1em auto 0.5em;
+}
+
+section#resultados table thead td {
+    font-weight: bold;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+section#resultados table td, section#resultados table th {
+    border: 1px solid silver;
+    padding: 0.3em;
+}
+
+section#resultados tbody td:last-child {
+    text-align: right;
+}
+
+section#resultados table#detalle_irpf tbody td:last-child {
+    text-align: right;
+    font-weight: normal;
+}
+
+section#resultados table th {
+    font-weight: bold;
+}
+
+table#detalle_bps td {
+    text-align: center;
+}
+
+section#resultados table#detalle_irpf td {
+    text-align: center;
+}
+
+table#dependientes {
+    display: none;
+    table-layout: fixed;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 1em auto;
+    width: 100%;
+    border: 1px solid gray;
+}
+
+table#dependientes thead tr {
+    border: 1px solid black;
+    font-weight: bold;
+}
+
+table#dependientes td {
+    border: 1px solid gray;
+}
+
+table#dependientes tr td:nth-child(1) {
+    width: 10%;
+}
+
+table#dependientes tr td:nth-child(2) {
+    width: 30%;
+}
+
+table#dependientes tr td:nth-child(3) {
+    width: 30%;
+}
+
+table#dependientes tr td:nth-child(4) {
+    width: 30%;
+}
+
+span#salario_calculado {
+    color: navy;
+}
+
+div#profesional {
+    display: none;
+}
+
+.tag:before {
+    content: attr(data-tag) ':';
+    background: silver;
+    padding: 0 2px;
+    border-radius: 5px;
+    color: rgb(235,235,235);
+    font-weight: bold;
+    font-size: 0.8em;
+    margin: 0 0.1em 0 0;
+}
